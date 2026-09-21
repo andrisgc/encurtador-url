@@ -2,7 +2,6 @@ package com.agc.encurtador.controller;
 
 import com.agc.encurtador.model.Url;
 import com.agc.encurtador.service.UrlService;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
