@@ -2,6 +2,7 @@ package com.agc.encurtador.controller;
 
 import com.agc.encurtador.model.Url;
 import com.agc.encurtador.service.UrlService;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,10 @@ public class UrlController {
     // A annotation @PathVariable serve para atribuir o texto dinâmico da URL a uma variável, no nosso caso codigoCurto.
     @GetMapping("/{codigoCurto}")
     public ResponseEntity<Void> redirecionar(@PathVariable String codigoCurto) {
+        if (codigoCurto == null || codigoCurto.trim().isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
         Optional<Url> urlEncontrada = urlService.buscaUrl(codigoCurto);
 
         if (urlEncontrada.isPresent()) {
