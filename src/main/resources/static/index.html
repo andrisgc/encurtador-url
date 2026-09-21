@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encurtador de URL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #resultado {
+            margin-top: 20px;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Encurtador de URL</h2>
+    <p>Cole seu link grande abaixo:</p>
+
+    <input type="text" id="urlOriginal" placeholder="https://exemplo.com/link-gigante">
+    <button onclick="encurtarUrl()">Encurtar Link</button>
+
+    <div id="resultado"></div>
+</div>
+
+<script>
+    async function encurtarUrl() {
+        const urlOriginal = document.getElementById('urlOriginal').value;
+        const resultadoDiv = document.getElementById('resultado');
+
+        if (!urlOriginal) {
+            alert('Por favor, insira uma URL!');
+            return;
+        }
+
+        try {
+            // Dispara a requisição POST para o nosso Controller Java
+            const resposta = await fetch('http://localhost:8080/encurtar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ urlOriginal: urlOriginal })
+            });
+
+            if (resposta.ok) {
+                const dados = await resposta.json();
+                // Monta o link curto baseado no código gerado pelo backend
+                const linkCurto = `http://localhost:8080/${dados.codigoCurto}`;
+
+                resultadoDiv.innerHTML = `
+                    <p style="color: green;">Sucesso!</p>
+                    <a href="${linkCurto}" target="_blank">${linkCurto}</a>
+                `;
+            } else {
+                resultadoDiv.innerHTML = `<p style="color: red;">Erro ao encurtar o link.</p>`;
+            }
+        } catch (error) {
+            console.error('Erro de rede:', error);
+            resultadoDiv.innerHTML = `<p style="color: red;">Falha ao conectar com o servidor.</p>`;
+        }
+    }
+</script>
+
+</body>
+</html>
