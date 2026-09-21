@@ -50,3 +50,20 @@ Como o projeto utiliza o banco de dados H2 em memória, você pode inspecionar a
 * **JDBC URL:** `jdbc:h2:mem:encurtadordb`
 * **User:** `sa`
 * **Password:**
+
+## 📐 Visão Geral
+``` mermaid
+graph TD
+    %% Nós do diagrama
+    User([Cliente])
+    Front[Interface Web <br> HTML/JS]
+    API[API Rest <br> Spring Boot]
+    DB[(Banco de Dados <br> H2 In-Memory)]
+
+    %% Conexões
+    User -->|Acede à página| Front
+    Front -->|Faz POST /encurtar <br> via Fetch API| API
+    User -->|Acede ao Link Curto| API
+    API -->|Guarda e Consulta <br> via JPA/Hibernate| DB
+
+```
