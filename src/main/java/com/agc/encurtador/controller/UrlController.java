@@ -34,7 +34,7 @@ public class UrlController {
 
     // A annotation @GetMapping cria uma rota que receberá requisições GET. O {} indica texto dinâmico.
     // A annotation @PathVariable serve para atribuir o texto dinâmico da URL a uma variável, no nosso caso codigoCurto.
-    @GetMapping("/{codigoCurto}")
+    @GetMapping("/{codigoCurto:[a-zA-Z0-9]+}")
     public ResponseEntity<Void> redirecionar(@PathVariable String codigoCurto) {
         if (codigoCurto == null || codigoCurto.trim().isEmpty()) {
             return ResponseEntity.notFound().build();
