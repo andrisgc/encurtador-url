@@ -6,8 +6,8 @@ Este projeto foi desenvolvido com foco em boas práticas de API REST, manipulaç
 
 ## 🚀 Tecnologias Utilizadas
 
-* **Java 17+**
-* **Spring Boot 3** (Spring Web, Spring Data JPA)
+* **Java 21+**
+* **Spring Boot 4** (Spring Web, Spring Data JPA)
 * **Banco de Dados H2** (In-Memory)
 * **HTML5, CSS3 e JavaScript (Vanilla)** para a interface
 * **Maven** para gestão de dependências
